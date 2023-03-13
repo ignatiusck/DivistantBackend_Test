@@ -11,7 +11,7 @@
 
 The ERD
 
-![ERD](docs/Screenshot%20from%202023-03-13%2021-01-11.png)
+![ERD](docs/Screenshot%20from%202023-03-13%2022-21-44.png)
 
 I add one more table to make many-to-many relations easier to control.
 
