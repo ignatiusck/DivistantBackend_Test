@@ -1,25 +1,25 @@
 ("use strict");
 
-import { Model, Sequelize } from "sequelize";
+const { Model } = require("sequelize");
 
-export default (sequelize, DataTypes) => {
+module.exports = (sequelize, DataTypes) => {
   class inventory extends Model {
     static associate(models) {
       // define association here
       inventory.belongsTo(models.lab, {
         foreignKey: "id",
-        targetKey: "labId",
+        sourceKey: "labId",
       });
     }
   }
   inventory.init(
     {
       inventory_name: DataTypes.STRING,
-      inventory_images: DataTypes.ARRAY(DataTypes.STRING),
+      inventory_images: DataTypes.STRING,
       labId: {
-        Types: DataTypes.UUID,
+        type: DataTypes.UUID,
         references: {
-          model: "lab",
+          model: "labs",
           key: "id",
         },
       },

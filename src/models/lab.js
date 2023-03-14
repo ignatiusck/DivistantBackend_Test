@@ -1,17 +1,17 @@
 ("use strict");
 
-import { Model } from "sequelize";
+const { Model } = require("sequelize");
 
-export default (sequelize, DataTypes) => {
+module.exports = (sequelize, DataTypes) => {
   class lab extends Model {
     static associate(models) {
       // define association here
       lab.hasMany(models.inventory, {
         foreignKey: "labId",
       });
-      lab.hasMany(models.userlab, {
-        foreignKey: "lab_id",
-      });
+      // lab.hasMany(models.userlab, {
+      //   foreignKey: "lab_id",
+      // });
     }
   }
   lab.init(
@@ -21,6 +21,7 @@ export default (sequelize, DataTypes) => {
     {
       sequelize,
       modelName: "lab",
+      timestamps: false,
     }
   );
   return lab;
