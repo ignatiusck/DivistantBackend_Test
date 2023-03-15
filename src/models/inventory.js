@@ -27,6 +27,7 @@ module.exports = (sequelize, DataTypes) => {
     {
       sequelize,
       modelName: "inventory",
+      timestamps: false,
     }
   );
   return inventory;
