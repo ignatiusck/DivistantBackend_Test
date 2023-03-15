@@ -13,7 +13,21 @@ exports.postInvent = async (req, res, next) => {
       err.statusCode = 422;
       throw err;
     }
+    //add data to DB
+    const inventModel = await inventory.create({
+      id: crypto.randomUUID(),
+      inventory_name: req.body.inventory_name,
+      inventory_images: req.body.inventory_images,
+      labid: req.userId,
+    });
+    await inventModel.save();
+    //respon for client
+    res.status(200).json({
+      message: "inventory created.",
+      list: inventModel,
+    });
   } catch (err) {
+    //catch error
     if (!err.statusCode) {
       err.statusCode = 500;
     }
