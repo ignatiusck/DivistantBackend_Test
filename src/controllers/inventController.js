@@ -1,9 +1,18 @@
 const crypto = require("crypto");
+const { validationResult } = require("express-validator");
 
 const { inventory } = require("../models");
 
+//CREATE NEW INVENTORY
 exports.postInvent = async (req, res, next) => {
   try {
+    //Error handler for validation proccess
+    const err = validationResult(req);
+    if (!err.isEmpty()) {
+      const err = new Error("Validation Failed.");
+      err.statusCode = 422;
+      throw err;
+    }
   } catch (err) {
     if (!err.statusCode) {
       err.statusCode = 500;
@@ -12,6 +21,7 @@ exports.postInvent = async (req, res, next) => {
   }
 };
 
+//FETCH LIST INVENTORY
 exports.getInverts = async (req, res, next) => {
   try {
     const inventModel = await inventory.findAll();
@@ -26,6 +36,7 @@ exports.getInverts = async (req, res, next) => {
   }
 };
 
+//FETCH SINGLE INVENTORY BY ID
 exports.getInvert = async (req, res, next) => {
   try {
     const inventModel = await inventory.findByPk(req.params.id);
@@ -40,8 +51,16 @@ exports.getInvert = async (req, res, next) => {
   }
 };
 
+//UPDATE SINGLE INVENTORY DATA BY ID
 exports.putInvert = async (req, res, next) => {
   try {
+    //Error handler for validation proccess
+    const err = validationResult(req);
+    if (!err.isEmpty()) {
+      const err = new Error("Validation Failed.");
+      err.statusCode = 422;
+      throw err;
+    }
   } catch (err) {
     if (!err.statusCode) {
       err.statusCode = 500;
@@ -50,6 +69,7 @@ exports.putInvert = async (req, res, next) => {
   }
 };
 
+//DELETE SINGLE INVENTORY BY ID
 exports.deleteInvert = async (req, res, next) => {
   try {
   } catch (err) {
