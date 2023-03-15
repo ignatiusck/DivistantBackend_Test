@@ -19,7 +19,7 @@ module.exports = (sequelize, DataTypes) => {
       labId: {
         type: DataTypes.UUID,
         references: {
-          model: "labs",
+          model: "lab",
           key: "id",
         },
       },

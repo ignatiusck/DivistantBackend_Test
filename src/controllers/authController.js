@@ -16,7 +16,7 @@ exports.signUp = async (req, res, next) => {
       throw err;
     }
     //check email user already in DB or not
-    const userEmail = user.findOne({ where: { email: req.body.email } });
+    const userEmail = await user.findOne({ where: { email: req.body.email } });
     if (userEmail) {
       const err = Error("Email already exist.");
       err.statusCode = 422;
@@ -95,6 +95,7 @@ exports.signIn = async (req, res, next) => {
   }
 };
 
+//AUTHORIZATION FOR EVERY FEATURE FOR USER
 exports.authorization = async (req, res, next) => {
   try {
     //Read data from header

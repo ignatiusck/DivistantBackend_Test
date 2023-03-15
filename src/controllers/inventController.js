@@ -18,7 +18,7 @@ exports.postInvent = async (req, res, next) => {
       id: crypto.randomUUID(),
       inventory_name: req.body.inventory_name,
       inventory_images: req.body.inventory_images,
-      labid: req.userId,
+      labId: req.body.labId,
     });
     await inventModel.save();
     //respon for client
