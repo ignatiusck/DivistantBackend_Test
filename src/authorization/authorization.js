@@ -18,7 +18,7 @@ exports.authorization = async (req, res, next) => {
       err.statusCode = 401;
       throw err;
     }
-    //add userId to req.userId for authorization feature
+    //add userId to req.userId for authorization user feature
     req.userId = decodeToken.userId;
     next();
   } catch (err) {

@@ -13,8 +13,4 @@ The ERD
 
 ![ERD](docs/Screenshot%20from%202023-03-14%2014-55-26.png)
 
-I add one more table to make many-to-many relations easier to control.
-
-## Basic Backend Development Test
-
-## ...
+Added one more table to make many-to-many relations easier to control.
