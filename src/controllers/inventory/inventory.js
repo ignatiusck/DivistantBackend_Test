@@ -1,7 +1,7 @@
 const crypto = require("crypto");
 const { validationResult } = require("express-validator");
 
-const { inventory } = require("../models");
+const { inventory } = require("../../models");
 
 //CREATE NEW INVENTORY
 exports.postInvent = async (req, res, next) => {

@@ -1,7 +1,7 @@
 const crypto = require("crypto");
 const { validationResult } = require("express-validator");
 
-const { lab } = require("../models");
+const { lab } = require("../../models");
 
 //CREATE NEW LAB
 exports.postLab = async (req, res, next) => {
