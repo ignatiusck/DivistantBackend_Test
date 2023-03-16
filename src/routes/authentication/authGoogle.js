@@ -2,7 +2,7 @@ const express = require("express");
 const passport = require("passport");
 const GoogleStrategy = require("passport-google-oauth").OAuth2Strategy;
 
-const googleAuth = require("../controllers/oauthController");
+const googleAuth = require("../../controllers/authentication/authGoogle");
 
 const router = express.Router();
 

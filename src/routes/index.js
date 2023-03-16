@@ -1,15 +1,15 @@
 const express = require("express");
 
-const labRoute = require("./labRoutes");
-const inventRoute = require("./inventRoute");
-const authRoute = require("./authRoute");
-const oauthRoute = require("./oauthRoute");
+const routeLab = require("./lab/lab");
+const routeInvent = require("./inventory/inventory");
+const routeAuthDirect = require("./authentication/authDirect");
+const routeAuthGoogle = require("./authentication/authGoogle");
 
-const route = express.Router();
+const router = express.Router();
 
-route.use(labRoute);
-route.use(inventRoute);
-route.use(authRoute);
-route.use(oauthRoute);
+router.use(routeLab);
+router.use(routeInvent);
+router.use(routeAuthDirect);
+router.use(routeAuthGoogle);
 
-module.exports = route;
+module.exports = router;

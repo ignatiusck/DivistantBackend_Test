@@ -1,7 +1,7 @@
 const jwt = require("jsonwebtoken");
 const session = require("express-session");
 
-const { user } = require("../models");
+const { user } = require("../../models");
 
 exports.getResult = async (req, res, next) => {
   const { data } = await this.getDataUser.registerWithGoogle(userProfile);

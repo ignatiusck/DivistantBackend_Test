@@ -3,7 +3,7 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const { validationResult } = require("express-validator");
 
-const { user } = require("../models");
+const { user } = require("../../models");
 
 //SIGNUP NEW USER
 exports.signUp = async (req, res, next) => {
@@ -80,7 +80,7 @@ exports.signIn = async (req, res, next) => {
         email: userModel.email,
         userId: userModel.id,
       },
-      "supersecreat",
+      `${process.env.SECREAT_KEY}`,
       { expiresIn: "1h" }
     );
 
@@ -92,33 +92,5 @@ exports.signIn = async (req, res, next) => {
       err.statusCode = 500;
     }
     next(err);
-  }
-};
-
-//AUTHORIZATION FOR EVERY FEATURE FOR USER
-exports.authorization = async (req, res, next) => {
-  try {
-    //Read data from header
-    const authHeader = req.get("Authorization");
-    if (!authHeader) {
-      const err = new Error("not authenticated");
-      err.statusCode = 401;
-      throw err;
-    }
-    //Decode jwt token
-    const token = authHeader.split(" ")[1];
-    const decodeToken = await jwt.verify(token, "supersecreat");
-    if (!decodeToken) {
-      const err = new Error("not authenticated.");
-      err.statusCode = 401;
-      throw err;
-    }
-    //add userId to req.userId for authorization feature
-    req.userId = decodeToken.userId;
-    next();
-  } catch (err) {
-    //catch the error
-    err.statusCode = 500;
-    throw err;
   }
 };
