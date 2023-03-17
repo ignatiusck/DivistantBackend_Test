@@ -67,10 +67,21 @@ exports.getLab = async (req, res, next) => {
   try {
     //find lab by id
     const LabModel = await lab.findByPk(req.params.id);
+    if (!LabModel) {
+      const err = new Error("lab not found.");
+      err.statusCode = 404;
+      throw err;
+    }
+
+    //find all manager lab
+    const userlabModel = await userlab.findAll({
+      where: { lab_id: req.params.id },
+    });
 
     //respon for client
     res.status(200).json({
-      list: LabModel,
+      list_lab: LabModel,
+      list_managerId: userlabModel.id,
     });
   } catch (err) {
     //catch the error
@@ -136,4 +147,74 @@ exports.putLab = async (req, res, next) => {
     }
     next(err);
   }
+};
+
+//ADD NEW LAB MANAGER BY EMAIL
+exports.postAddUser = async (req, res, next) => {
+  //Authorization user
+  const userLab = await new userlab.findOne({
+    where: { user_id: req.userId, lab_id: req.body.labId },
+  });
+  if (!userLab) {
+    const err = new Error("user is not the manager of the lab");
+    err.statusCode = 422;
+    throw err;
+  }
+
+  //check the user already the manager of the lab or not
+  const userModel = await new user.findOne({
+    where: { email: req.body.email },
+  });
+  const userlabModel = await new userlab.findOne({
+    where: { user_id: userModel.id, lab_id: req.body.labid },
+  });
+  if (userlabModel) {
+    const err = new Error("User is already the manager of the lab");
+    err.statusCode = 422;
+    throw err;
+  }
+
+  //add user to lab
+  const newUserLab = await new userlab.create({
+    user_id: userModel.id,
+    lab_id: req.body.labid,
+  });
+  await newUserLab.save();
+
+  //respon for client
+  res.status(200).json({
+    message: "user added.",
+    user: userModel,
+  });
+};
+
+//REMOVE LAB MANAGER
+exports.postRemoveUser = async (req, res, next) => {
+  //Authorization user
+  const userLab = await new userlab.findOne({
+    where: { user_id: req.userId, lab_id: req.body.labId },
+  });
+  if (!userLab) {
+    const err = new Error("user is not the manager of the lab");
+    err.statusCode = 422;
+    throw err;
+  }
+
+  //check the user is manager of the lab or not
+  const userLabNew = await new userlab.findOne({
+    where: { user_id: req.body.id, lab_id: req.body.labId },
+  });
+  if (!userLabNew) {
+    const err = new Error("user is not the manager of the lab");
+    err.statusCode = 422;
+    throw err;
+  }
+
+  //remove the user
+  await userLabNew.destroy();
+
+  //respon for client
+  res.status(200).json({
+    message: "User removed",
+  });
 };
