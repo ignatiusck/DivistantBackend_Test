@@ -21,4 +21,10 @@ router.get("/lab/:id", authorization, controller.getLab);
 //UPDATE DATA LAB BY ID
 router.put("/lab/update/:id", validator, authorization, controller.putLab);
 
+//ADD NEW LAB MANAGER
+router.post("/lab/add-user", authorization, controller.postAddUser);
+
+//REMOVE LAB MANAGER
+router.delete("/lab/remove-user", authorization, controller.postRemoveUser);
+
 module.exports = router;
